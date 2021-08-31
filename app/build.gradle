@@ -2,18 +2,26 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
+apply from: rootProject.getRootDir().getAbsolutePath() + "/app/config.gradle"
 
 android {
-    compileSdk 31
+    compileSdk COMPILE_SDK_VERSION
 
     defaultConfig {
-        applicationId "com.jimes.app"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        applicationId APPLICATION_ID
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
     }
 
     buildTypes {
@@ -40,4 +48,20 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // 基础依赖包，必须要依赖
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    // fragment快速实现（可选）
+    implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+    // kotlin扩展（可选）
+    implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+
+    // 替换成最新版本, 需要注意的是api
+    // 要与compiler匹配使用，均使用最新版可以保证兼容
+    implementation "com.alibaba:arouter-api:1.5.0"
+    implementation "androidx.multidex:multidex:2.0.1"
+
+
+
+
 }
